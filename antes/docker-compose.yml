@@ -1,0 +1,37 @@
+# ANTES: todos los servicios en la red por defecto y la BD publicada al host.
+# Credenciales solo para el laboratorio.
+name: l5-antes
+
+services:
+  gateway:
+    build: ../gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ../backend
+    environment:
+      DB_HOST: db
+      DB_USER: lab
+      DB_PASSWORD: lab_password
+      DB_NAME: labdb
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab_password
+      POSTGRES_DB: labdb
+    ports:
+      # Expuesta al exterior (mala práctica, a propósito).
+      # Se usa 15432 en el host para no chocar con un PostgreSQL local.
+      - "15432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d labdb"]
+      interval: 3s
+      retries: 10
