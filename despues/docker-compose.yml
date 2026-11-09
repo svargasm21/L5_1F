@@ -1,0 +1,52 @@
+# DESPUÉS: patrón de segmentación de red en tres zonas.
+#   public_net : zona pública  -> gateway
+#   app_net    : zona de aplicación -> gateway, backend
+#   data_net   : zona de datos -> backend, db
+# Credenciales solo para el laboratorio.
+name: l5-despues
+
+services:
+  gateway:
+    build: ../gateway
+    ports:
+      - "80:80"            # único puerto publicado al exterior
+    networks:
+      - public_net
+      - app_net
+    depends_on:
+      - backend
+
+  backend:
+    build: ../backend
+    environment:
+      DB_HOST: db
+      DB_USER: lab
+      DB_PASSWORD: lab_password
+      DB_NAME: labdb
+    networks:
+      - app_net
+      - data_net
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab_password
+      POSTGRES_DB: labdb
+    # sin "ports": la BD no se publica al host
+    networks:
+      - data_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d labdb"]
+      interval: 3s
+      retries: 10
+
+networks:
+  public_net: {}
+  app_net:
+    internal: true         # sin salida a Internet
+  data_net:
+    internal: true         # sin salida a Internet
