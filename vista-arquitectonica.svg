@@ -29,8 +29,8 @@
 
   <!-- trust boundary crítico: línea entre APLICACIÓN y DATOS -->
   <line x1="60" y1="675" x2="940" y2="675" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="7 6"/>
-  <rect x="690" y="664" width="250" height="20" rx="4" fill="#fdecef"/>
-  <text x="815" y="678" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="700">trust boundary crítico (pública ↔ datos)</text>
+  <rect x="80" y="664" width="250" height="20" rx="4" fill="#fdecef"/>
+  <text x="205" y="678" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="700">trust boundary crítico (pública ↔ datos)</text>
 
   <!-- ============ NODES centrados en cada franja, misma columna (x=400..600) ============ -->
   <!-- Browser -->
@@ -74,7 +74,7 @@
   <text x="392" y="787" font-size="9.5" fill="#5a6b7b">SIN "ports" (no publicada)</text>
   <text x="392" y="802" font-size="9.5" fill="#5a6b7b">networks: data_net</text>
   <rect x="392" y="812" width="216" height="32" rx="5" fill="#f3fbf6" stroke="#aedcc1"/>
-  <text x="400" y="826" font-size="8.5" fill="#8a97a6">data store · DB appdb</text>
+  <text x="400" y="826" font-size="8.5" fill="#8a97a6">data store · DB labdb</text>
   <text x="400" y="838" font-size="9" fill="#5a6b7b">Docker DNS: db:5432</text>
 
   <!-- ============ CONNECTORS PERMITIDOS: líneas rectas VERTICALES (centro x=500) ============ -->
@@ -88,7 +88,7 @@
 
   <!-- C3 backend -> db -->
   <line x1="500" y1="640" x2="500" y2="718" stroke="#1b7f3b" stroke-width="2.2" marker-end="url(#aGreen)"/>
-  <text x="512" y="682" font-size="9.5" fill="#1b7f3b" font-weight="700">C3 · :5432</text>
+  <text x="512" y="706" font-size="9.5" fill="#1b7f3b" font-weight="700">C3 · :5432</text>
 
   <!-- ============ CONNECTORS BLOQUEADOS: ortogonales por un canal lateral derecho ============ -->
   <!-- C4 gateway -> db : sale de gateway por la derecha (x=620), sube a canal x=760, baja hasta db, con corte en el trust boundary -->
