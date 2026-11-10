@@ -38,7 +38,7 @@ Las pruebas 1 a 3 muestran que la aplicación sigue funcionando; la 4 y la 5 son
 
 ### 1. Implementación
 
-**Responsable:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 - Montar el escenario de la tabla separando las redes (por ejemplo, redes de Docker Compose, NetworkPolicy en Kubernetes o subredes en la nube).
 - Levantar el sistema segmentado y verificar que la aplicación sigue funcionando.
@@ -46,7 +46,7 @@ Las pruebas 1 a 3 muestran que la aplicación sigue funcionando; la 4 y la 5 son
 
 ### 2. Vista arquitectónica
 
-**Responsable:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 - Desarrollar la vista de despliegue.
 - Marcar las zonas, los límites de confianza y los flujos permitidos y bloqueados.
@@ -54,7 +54,7 @@ Las pruebas 1 a 3 muestran que la aplicación sigue funcionando; la 4 y la 5 son
 
 ### 3. Evidencia y resultados
 
-**Responsable:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 - Ejecutar las cinco pruebas de la tabla antes (todo en una sola red) y después (segmentado).
 - Capturar los comandos y los intentos bloqueados, por ejemplo `docker compose exec gateway nc -zv db 5432` fallando y la misma prueba desde el backend funcionando.
@@ -62,7 +62,7 @@ Las pruebas 1 a 3 muestran que la aplicación sigue funcionando; la 4 y la 5 son
 
 ### 4. Guía técnica y entrega
 
-**Responsable:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 - Redactar el .md: descripción del patrón y su propósito, escenario de calidad, pasos seguidos, snippets, resultados y recomendaciones.
 - Exportar a PDF y nombrarlo `l5_X.pdf`.

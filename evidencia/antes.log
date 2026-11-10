@@ -1,0 +1,55 @@
+﻿# Escenario: antes
+# Fecha: 2026-11-09 21:28:02
+# Docker: 29.9.2 | Docker Compose version v5.6.1
+
+## Contenedores y puertos publicados
+SERVICE   STATE     PORTS
+backend   running   3000/tcp
+db        running   0.0.0.0:15432->5432/tcp, [::]:15432->5432/tcp
+gateway   running   0.0.0.0:80->80/tcp, [::]:80->80/tcp
+
+## Redes de cada contenedor
+gateway  -> l5-antes_default
+backend  -> l5-antes_default
+db       -> l5-antes_default
+
+## Pruebas
+
+### Prueba 1 | Exterior -> gateway  [CONECTA | como se esperaba]
+PS> curl.exe -sS --max-time 5 localhost
+gateway ok
+
+### Prueba 1b | Exterior -> gateway -> backend -> db  [CONECTA | como se esperaba]
+PS> curl.exe -sS --max-time 5 localhost/api/health
+{"status":"ok","db":"up","time":"2026-11-10T02:28:03.820Z"}
+
+### Prueba 2 | gateway -> backend  [CONECTA | como se esperaba]
+PS> docker compose exec -T gateway curl -sS --max-time 5 backend:3000/health
+{"status":"ok","db":"up","time":"2026-11-10T02:28:04.068Z"}
+
+### Prueba 3 | backend -> db  [CONECTA | como se esperaba]
+PS> docker compose exec -T backend nc -zv -w 3 db 5432
+Connection to db (172.22.0.2) 5432 port [tcp/postgresql] succeeded!
+
+### Prueba 4 | gateway -> db (por nombre)  [CONECTA | como se esperaba]
+PS> docker compose exec -T gateway nc -zv -w 3 db 5432
+Connection to db (172.22.0.2) 5432 port [tcp/postgresql] succeeded!
+
+### Prueba 4b | gateway -> db (por IP 172.22.0.2)  [CONECTA | como se esperaba]
+PS> docker compose exec -T gateway nc -zv -w 3 172.22.0.2 5432
+Connection to 172.22.0.2 5432 port [tcp/postgresql] succeeded!
+
+### Prueba 5 | Exterior -> db (host :15432)  [CONECTA | como se esperaba]
+PS> Test-NetConnection localhost -Port 15432   # TCP connect, timeout 3 s
+TcpTestSucceeded : True
+
+## Resumen
+Prueba Flujo                                Resultado Veredicto       
+------ -----                                --------- ---------       
+1      Exterior -> gateway                  CONECTA   como se esperaba
+1b     Exterior -> gateway -> backend -> db CONECTA   como se esperaba
+2      gateway -> backend                   CONECTA   como se esperaba
+3      backend -> db                        CONECTA   como se esperaba
+4      gateway -> db (por nombre)           CONECTA   como se esperaba
+4b     gateway -> db (por IP 172.22.0.2)    CONECTA   como se esperaba
+5      Exterior -> db (host :15432)         CONECTA   como se esperaba
